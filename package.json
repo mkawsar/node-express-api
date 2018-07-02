@@ -1,0 +1,24 @@
+{
+  "name": "easy-notes-app",
+  "version": "1.0.0",
+  "description": "Never miss a thing in Life. Take notes quickly. Organize and keep track of all your notes.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon --watch app server.js"
+  },
+  "keywords": [
+    "RestAPI",
+    "NodeJS",
+    "ExpressJS",
+    "MongoDB"
+  ],
+  "author": "Kawsar",
+  "license": "ISC",
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.1.7",
+    "nodemon": "^1.17.5"
+  }
+}
