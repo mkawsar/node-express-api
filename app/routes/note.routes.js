@@ -1,5 +1,6 @@
 module.exports = (app) => {
     const notes = require('../controllers/note.controller');
+    const checkAuth = require('../middleware/auth.check');
 
     // create new note
     app.post('/notes', notes.create);
@@ -15,4 +16,4 @@ module.exports = (app) => {
 
     // delete a Note with noteId
     app.delete('/notes/:noteId', notes.delete);
-}
+};
