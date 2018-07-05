@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/user.model');
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
+const secretConfig = require('../../../config/secret.config');
 
 // user create
 
@@ -68,7 +69,7 @@ exports.login = (req, res) => {
                             email: user[0].email,
                             userId: user[0]._id
                         },
-                        user[0].password,
+                        secretConfig.secretKey,
                         process.env.JWT_KEY,
                         {
                             expiresIn: "1h"
