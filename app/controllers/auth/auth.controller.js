@@ -23,13 +23,14 @@ exports.create = (req, res) => {
                     } else {
                         const user = new User({
                             _id: new mongoose.Types.ObjectId(),
+                            name: req.body.name,
                             email: req.body.email,
+                            phone: req.body.phone,
                             password: hash
                         });
                         user
                             .save()
                             .then(result => {
-                                console.log(result);
                                 res.status(201).json({
                                     message: "User created"
                                 });
@@ -77,7 +78,8 @@ exports.login = (req, res) => {
                     );
                     return res.status(200).json({
                         message: "Auth successful",
-                        token: token
+                        token: token,
+                        userId: user[0]._id
                     });
                 }
                 res.status(401).json({
@@ -115,4 +117,32 @@ function verifyToken(req, res, next) {
         res.sendStatus(403);
     }
 
-}
+};
+
+// auth user profile information
+exports.profile = (req, res) => {
+    User.findById(req.headers.userid).select('-password')
+        .then(user => {
+            if(!user) {
+                return res.status(404).send({
+                    message: "User not found with id " + req.headers.userid
+                });            
+            } else {
+                //res.send(user);
+                return res.status(200).send({
+                    user: user,
+                });
+            }
+        })
+        .catch(err => {
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: 'User not found with id ' + req.headers.userid
+                });
+            }
+            return res.status(500).send({
+                message: 'Error retrieving user with id ' + req.headers.userid
+            });
+        });
+    //console.log(req.headers.userid);
+};
